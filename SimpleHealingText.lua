@@ -41,7 +41,6 @@ local function ShowHeal(self, event, ...)
   local spellID, spellName, spellSchool
   local amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing, isOffHand
 
-
   if type == "SPELL_HEAL" and sourceName == player then
     spellName, _, amount, overheal, _, critical = select(12, ...)
     if not (not SHT_SETTINGS.hots and HealOverTimeSpells[spellName] ~= nil) then
@@ -93,7 +92,7 @@ function SimpleHealingText_OnEvent(self, event, ...)
       }
     end
 
-    local player, realm = UnitName("player")
+    player, realm = UnitName("player")
 
     SimpleHealingText:SetSize(100, 25)
     SimpleHealingText:SetPoint(SHT_SETTINGS.position.point, "UIParent", SHT_SETTINGS.position.rel_point, SHT_SETTINGS.position.x_offset, SHT_SETTINGS.position.y_offset)
