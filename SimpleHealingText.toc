@@ -3,7 +3,7 @@
 ## Notes: Text showing how much you healed your target.
 ## Author: Gonzo
 ## Version: v0.8
-## SavedVariables: SHT_SETTINGS
+## SavedVariablesPerCharacter: SHT_SETTINGS
 
 SimpleHealingText.lua
 SimpleHealingText.xml
