@@ -1,0 +1,9 @@
+## Interface: 11302
+## Title: SimpleHealingText
+## Notes: Text showing how much you healed your target.
+## Author: Gonzo
+## Version: v0.8
+## SavedVariables: SHT_SETTINGS
+
+SimpleHealingText.lua
+SimpleHealingText.xml
