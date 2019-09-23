@@ -1,7 +1,5 @@
 -- to-do:
--- save settings when logging out
 -- make text bigger without distorting
--- disable heals over time (optional slash command?)
 -- make floating text appear at target (long term)
 
 local player = nil
@@ -152,10 +150,10 @@ local SHTSlashCommands = {
   help = function(self)
     -- Multiple strings used to make the return statement a bit shorter.
     helpString = "SHT: Use '/sht arg' where 'arg' can be the following:\n"
-    enableString = "-- 'enable' shows the addon text.\n"
-    disableString = "-- 'disable' hides the addon.\n"
-    enablemoveString = "-- 'move' toggles the text to be draggable.\n"
-    disablemoveString = "-- 'hots' toggles whether it allows heal over time spells."
+    enableString = "-- 'enable' enables the addon if disabled.\n"
+    disableString = "-- 'disable' disables the addon and hides the text.\n"
+    enablemoveString = "-- 'move' toggles the ability to drag/move the text.\n"
+    disablemoveString = "-- 'hots' toggles whether it shows heal over time spells."
     return helpString .. enableString .. disableString .. enablemoveString .. disablemoveString
   end,
 
@@ -167,7 +165,7 @@ local function HandleSlashCommands(str)
 end
 
 -- Actual slash commands to be used and "inserting" them into blizzard's global
--- slash command table table/list.
+-- slash command table/list.
 SLASH_SimpleHealingText1 = "/sht"
 SLASH_SimpleHealingText2 = "/simplehealingtext"
 SlashCmdList.SimpleHealingText = HandleSlashCommands
