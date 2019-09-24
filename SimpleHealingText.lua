@@ -11,6 +11,7 @@ local HealOverTimeSpells = {
   ["Renew"] = true,
   ["Rejuvenation"] = true,
   ["Regrowth"] = true,
+  ["Vampiric Embrace"] = true,
 }
 
 local function Draggable(self, bool)
