@@ -84,6 +84,7 @@ function SimpleHealingText_OnEvent(self, event, ...)
       SHT_SETTINGS = {
         move = true,
         hots = true,
+        disabled = false,
         position = {
           point = "CENTER",
           rel_point = "CENTER",
@@ -101,8 +102,15 @@ function SimpleHealingText_OnEvent(self, event, ...)
     healthFont:SetPoint("CENTER", "SimpleHealingText", "CENTER", 0, 0)
     healthFont:SetTextColor(0, 1, 0)
     healthFont:SetText("Waiting for a heal...")
-    SimpleHealingText:Show()
-    healthFont:Show()
+    
+    if disabled ~= nil then
+      disabled = false
+    elseif disabled == true then
+      SimpleHealingText:Hide()
+    else
+      SimpleHealingText:Show()
+      healthFont:Show()
+
 
     self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
     self:SetScript("OnEvent",
@@ -123,11 +131,13 @@ end
 local SHTSlashCommands = {
   enable = function(self)
     SimpleHealingText:Show()
+    disabled = false
     return "SHT: Enabled."
   end,
 
   disable = function(self)
     SimpleHealingText:Hide()
+    disabled = true
     return "SHT: Disabled (use '/sht enable' to reenable)."
   end,
 
