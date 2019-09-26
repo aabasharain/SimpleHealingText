@@ -8,5 +8,6 @@ with the following arguements:
 "/sht enable" - Enables the addon if disabled.
 "/sht disable" - Disables the addon and hides the text.
 "/sht move" - Toggles the ability to drag/move the addon text.
-"/sht hots" - Toggles whether the addon will show the Heal Over Time Spells: Renew, Rejuvinate or Regrowth.
+"/sht hots" - Toggles whether the addon will show the Heal Over Time Spells: Renew, Rejuvinate, Regrowth or Vampiric Embrace.
+"/sht autohide" - Toggles whether there is a 5 second auto hide when no heal is detected.
 "/sht help" - Displays a message describing each slash command in game.

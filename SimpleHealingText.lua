@@ -6,6 +6,7 @@ local player = nil
 local realm = nil
 local healthFont
 local version = 0.8
+local elapsedTime = 0.0
 
 local HealOverTimeSpells = {
   ["Renew"] = true,
@@ -17,6 +18,27 @@ local HealOverTimeSpells = {
 local function Draggable(self, bool)
   self:SetMovable(bool)
   self:EnableMouse(bool)
+end
+
+local function SHT_OnUpdate(self, elapsed)
+  elapsedTime = elapsedTime + elapsed
+  if elapsedTime >= SHT_SETTINGS.hide and SHT_SETTINGS.hide > 0.0 then
+    --UIFrameFadeOut(SimpleHealingText, 1.0, 1, 0)
+    SimpleHealingText:Hide()
+    elapsedTime = 0.0
+  end
+end
+
+local function ToggleAutoHide()
+  if SHT_SETTINGS.hide > 0.0 then
+    SHT_SETTINGS.hide = 0.0
+    SimpleHealingText:Show()
+    return false
+  else
+    elapsedTime = 0.0
+    SHT_SETTINGS.hide = 5.0
+    return true
+  end
 end
 
 local function UpdatePosition(pt, rp, xo, yo)
@@ -50,6 +72,8 @@ local function ShowHeal(self, event, ...)
       else
         healthFont:SetText("+"..amount.." ("..destName..")")
       end
+      SimpleHealingText:Show()
+      elapsedTime = 0.0
     end
   end
 end
@@ -85,6 +109,7 @@ function SimpleHealingText_OnEvent(self, event, ...)
         move = true,
         hots = true,
         disabled = false,
+        hide = 0.0,
         position = {
           point = "CENTER",
           rel_point = "CENTER",
@@ -93,6 +118,11 @@ function SimpleHealingText_OnEvent(self, event, ...)
         }
       }
     end
+
+    if SHT_SETTINGS.hide == nil then
+      SHT_SETTINGS.hide = 0.0
+    end
+    elapsedTime = 0.0
 
     player, realm = UnitName("player")
 
@@ -118,7 +148,7 @@ function SimpleHealingText_OnEvent(self, event, ...)
               function(self, event)
                 ShowHeal(event, CombatLogGetCurrentEventInfo())
               end)
-
+    self:SetScript("OnUpdate", SHT_OnUpdate)
     Draggable(self, SHT_SETTINGS.move)
     self:RegisterForDrag("LeftButton")
     self:SetScript("OnDragStart", FrameDragStart)
@@ -158,6 +188,14 @@ local SHTSlashCommands = {
     end
   end,
 
+  autohide = function(self)
+    if ToggleAutoHide() then
+      return "Hiding Text after 5 seconds with no heal."
+    else
+      return "Auto hiding text disabled."
+    end
+  end,
+
   help = function(self)
     -- Multiple strings used to make the return statement a bit shorter.
     helpString = "SHT: Use '/sht arg' where 'arg' can be the following:\n"
@@ -165,7 +203,8 @@ local SHTSlashCommands = {
     disableString = "-- 'disable' disables the addon and hides the text.\n"
     enablemoveString = "-- 'move' toggles the ability to drag/move the text.\n"
     disablemoveString = "-- 'hots' toggles whether it shows heal over time spells."
-    return helpString .. enableString .. disableString .. enablemoveString .. disablemoveString
+    autohideString = "-- 'autohide' toggles whether there is a 5 second auto hide when no heal is detected."
+    return helpString .. enableString .. disableString .. enablemoveString .. disablemoveString .. autohideString
   end,
 
 }
