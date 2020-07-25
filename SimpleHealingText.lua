@@ -49,9 +49,7 @@ local function UpdatePosition(pt, rp, xo, yo)
 end
 
 local function ToggleHOTs()
-  print(SHT_SETTINGS.hots)
   SHT_SETTINGS.hots = not SHT_SETTINGS.hots
-  print(SHT_SETTINGS.hots)
   return SHT_SETTINGS.hots
 end
 
