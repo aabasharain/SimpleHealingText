@@ -49,7 +49,9 @@ local function UpdatePosition(pt, rp, xo, yo)
 end
 
 local function ToggleHOTs()
+  print(SHT_SETTINGS.hots)
   SHT_SETTINGS.hots = not SHT_SETTINGS.hots
+  print(SHT_SETTINGS.hots)
   return SHT_SETTINGS.hots
 end
 
@@ -64,13 +66,13 @@ local function ShowHeal(self, event, ...)
   local spellID, spellName, spellSchool
   local amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing, isOffHand
 
-  if type == "SPELL_HEAL" and sourceName == player then
+  if (type == "SPELL_HEAL" or type == "SPELL_PERIODIC_HEAL") and sourceName == player then
     spellName, _, amount, overheal, _, critical = select(12, ...)
     if not (not SHT_SETTINGS.hots and HealOverTimeSpells[spellName] ~= nil) then
       if critical == true then
-        healthFont:SetText("+"..amount.."(Crit) ("..destName..")")
+        healthFont:SetText("+"..amount.."(Crit) ("..spellName.." > "..destName..")")
       else
-        healthFont:SetText("+"..amount.." ("..destName..")")
+        healthFont:SetText("+"..amount.." ("..spellName.." > "..destName..")")
       end
       SimpleHealingText:Show()
       elapsedTime = 0.0
@@ -202,8 +204,8 @@ local SHTSlashCommands = {
     enableString = "-- 'enable' enables the addon if disabled.\n"
     disableString = "-- 'disable' disables the addon and hides the text.\n"
     enablemoveString = "-- 'move' toggles the ability to drag/move the text.\n"
-    disablemoveString = "-- 'hots' toggles whether it shows heal over time spells."
-    autohideString = "-- 'autohide' toggles whether there is a 5 second auto hide when no heal is detected."
+    disablemoveString = "-- 'hots' toggles whether it shows heal over time spells.\n"
+    autohideString = "-- 'autohide' toggles whether there is a 5 second auto hide when no heal is detected.\n"
     return helpString .. enableString .. disableString .. enablemoveString .. disablemoveString .. autohideString
   end,
 
