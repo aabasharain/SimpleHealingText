@@ -5,7 +5,7 @@
 local player = nil
 local realm = nil
 local healthFont
-local version = 0.8
+local version = 1.0
 local elapsedTime = 0.0
 
 local HealOverTimeSpells = {
